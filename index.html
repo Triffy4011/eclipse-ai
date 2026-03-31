@@ -1,152 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Eclipse AI</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    body {
-      margin: 0;
-      background: #050816;
-      color: #fff;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root{
+      --bg:#050816; --panel:#0b1020; --muted:#9ca3af; --accent:#6366f1;
+      --user:#2563eb; --bot:#111827; --glass:rgba(255,255,255,0.03);
     }
-    .chat-container {
-      width: 360px;
-      max-width: 90vw;
-      background: #0b1020;
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .header {
-      font-size: 18px;
-      font-weight: 600;
-    }
-    .sub {
-      font-size: 12px;
-      color: #9ca3af;
-    }
-    .messages {
-      flex: 1;
-      overflow-y: auto;
-      border-radius: 8px;
-      background: #050816;
-      padding: 8px;
-      font-size: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .msg {
-      padding: 8px 10px;
-      border-radius: 10px;
-      max-width: 90%;
-      line-height: 1.4;
-    }
-    .user {
-      align-self: flex-end;
-      background: #2563eb;
-    }
-    .bot {
-      align-self: flex-start;
-      background: #111827;
-    }
-    .input-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 4px;
-    }
-    input {
-      flex: 1;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: 1px solid #374151;
-      background: #020617;
-      color: #e5e7eb;
-      outline: none;
-      font-size: 14px;
-    }
-    button {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      border: none;
-      background: radial-gradient(circle at 30% 30%, #38bdf8, #6366f1, #a855f7);
-      cursor: pointer;
-      color: #fff;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    button:disabled {
-      opacity: 0.5;
-      cursor: default;
-    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#030416 0%,var(--bg) 100%);color:#e6eef8}
+    .card{width:380px;max-width:94vw;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:14px;padding:16px;box-shadow:0 8px 30px rgba(2,6,23,0.6);display:flex;flex-direction:column;gap:12px}
+    .hdr{display:flex;align-items:center;gap:10px}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+    .title{font-size:16px;font-weight:600}
+    .sub{font-size:12px;color:var(--muted)}
+    .messages{height:360px;overflow:auto;padding:10px;border-radius:10px;background:var(--glass);display:flex;flex-direction:column;gap:8px}
+    .msg{max-width:86%;padding:10px 12px;border-radius:12px;line-height:1.35;white-space:pre-wrap}
+    .msg.bot{background:var(--bot);align-self:flex-start}
+    .msg.user{background:var(--user);align-self:flex-end;color:#fff}
+    .controls{display:flex;gap:8px;align-items:center}
+    .input{flex:1;padding:10px 12px;border-radius:999px;border:1px solid rgba(255,255,255,0.04);background:#020617;color:#e6eef8;outline:none}
+    .btn{width:44px;height:44px;border-radius:999px;border:none;background:linear-gradient(135deg,#06b6d4,#6366f1);color:#fff;font-weight:700;cursor:pointer}
+    .btn:disabled{opacity:0.5;cursor:default}
+    .meta{font-size:12px;color:var(--muted);text-align:center;margin-top:6px}
+    .small{font-size:12px;color:var(--muted)}
+    .loading-dot{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:#fff;opacity:0.2;animation:blink 1s infinite}
+    .loading-dot:nth-child(2){animation-delay:.15s}
+    .loading-dot:nth-child(3){animation-delay:.3s}
+    @keyframes blink{0%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
   </style>
 </head>
 <body>
-  <div class="chat-container">
-    <div>
-      <div class="header">Eclipse AI</div>
-      <div class="sub">Gemini 1.5 Flash assistant</div>
-    </div>
-
-    <div id="messages" class="messages">
-      <div class="msg bot">
-        Eclipse AI is powered by Gemini 1.5 Flash through a secure server route. No local model, so it works on school Chromebooks.
+  <main class="card" role="main" aria-label="Eclipse AI chat">
+    <div class="hdr">
+      <div class="logo">E</div>
+      <div>
+        <div class="title">Eclipse AI</div>
+        <div class="sub">Groq Llama 3 assistant — friendly, fast</div>
       </div>
     </div>
 
-    <div class="input-row">
-      <input id="input" type="text" placeholder="Ask Eclipse anything..." />
-      <button id="sendBtn">➤</button>
+    <div id="messages" class="messages" aria-live="polite">
+      <div class="msg bot">Eclipse AI is ready. Say hi, Player.</div>
     </div>
-  </div>
+
+    <div class="controls">
+      <input id="input" class="input" type="text" placeholder="Ask Eclipse anything..." autocomplete="off" />
+      <button id="send" class="btn" title="Send">➤</button>
+    </div>
+
+    <div class="meta">
+      <span class="small">Responses powered by a secure server route. No API key in the browser.</span>
+    </div>
+  </main>
 
   <script>
+    // If you deploy under a different domain or embed in Google Sites,
+    // set API_BASE to your full Vercel URL, e.g.:
+    // const API_BASE = "https://eclipse-1ctzzc7wv-triffy4011s-projects.vercel.app";
+    // Otherwise leave as empty string to use relative path.
+    const API_BASE = "";
+
     const messagesEl = document.getElementById("messages");
     const inputEl = document.getElementById("input");
-    const sendBtn = document.getElementById("sendBtn");
+    const sendBtn = document.getElementById("send");
 
-    function addMessage(text, role) {
-      const div = document.createElement("div");
-      div.className = "msg " + (role === "user" ? "user" : "bot");
-      div.textContent = text;
-      messagesEl.appendChild(div);
+    function appendMessage(text, role = "bot") {
+      const d = document.createElement("div");
+      d.className = "msg " + (role === "user" ? "user" : "bot");
+      d.textContent = text;
+      messagesEl.appendChild(d);
       messagesEl.scrollTop = messagesEl.scrollHeight;
+      return d;
+    }
+
+    function showTypingIndicator() {
+      const el = document.createElement("div");
+      el.className = "msg bot";
+      el.id = "typing";
+      el.innerHTML = '<span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span>';
+      messagesEl.appendChild(el);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+      return el;
     }
 
     async function sendMessage() {
       const text = inputEl.value.trim();
       if (!text) return;
-
-      addMessage(text, "user");
+      appendMessage(text, "user");
       inputEl.value = "";
       sendBtn.disabled = true;
 
+      const typing = showTypingIndicator();
+
       try {
-        const res = await fetch("https://triffy4011-eclipse-ai.vercel.app/api/gemini", {
+        const res = await fetch((API_BASE || "") + "/api/groq", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message: text })
         });
 
         const data = await res.json();
-        addMessage(data.reply || "I couldn’t generate a response, Player.", "bot");
+
+        // Remove typing indicator
+        typing.remove();
+
+        if (!res.ok) {
+          const err = data?.reply || data?.error || "Server error, Player.";
+          appendMessage(err, "bot");
+        } else {
+          appendMessage(data.reply || "I couldn’t generate a response, Player.", "bot");
+        }
       } catch (err) {
+        typing.remove();
         console.error(err);
-        addMessage("I hit a server issue, Player. Try again in a bit.", "bot");
+        appendMessage("I hit a server issue, Player. Try again in a bit.", "bot");
       } finally {
         sendBtn.disabled = false;
+        inputEl.focus();
       }
     }
 
@@ -154,6 +127,9 @@
     inputEl.addEventListener("keydown", (e) => {
       if (e.key === "Enter") sendMessage();
     });
+
+    // Accessibility: focus input on load
+    window.addEventListener("load", () => inputEl.focus());
   </script>
 </body>
 </html>
