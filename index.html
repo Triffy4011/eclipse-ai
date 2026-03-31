@@ -6,18 +6,14 @@
 <title>Eclipse AI</title>
 
 <style>
-  /* ====== BASE RESET ====== */
   * {
     box-sizing: border-box;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
-
   body {
     margin: 0;
     background: #050716;
   }
-
-  /* ====== FLOATING GEMINI ORB BUTTON ====== */
   #eclipse-ai-orb {
     position: fixed;
     bottom: 24px;
@@ -40,7 +36,6 @@
       opacity 0.25s ease;
     z-index: 999999;
   }
-
   #eclipse-ai-orb:hover {
     transform: translateY(-4px) scale(1.05);
     box-shadow:
@@ -48,7 +43,6 @@
       0 18px 40px rgba(0, 0, 0, 0.6),
       0 0 35px rgba(120, 105, 255, 0.9);
   }
-
   #eclipse-ai-orb-inner {
     width: 40px;
     height: 40px;
@@ -60,7 +54,6 @@
     position: relative;
     overflow: hidden;
   }
-
   #eclipse-ai-orb-inner::before {
     content: "";
     position: absolute;
@@ -70,7 +63,6 @@
     animation: eclipse-orb-spin 6s linear infinite;
     opacity: 0.7;
   }
-
   #eclipse-ai-orb-icon {
     position: relative;
     width: 18px;
@@ -79,13 +71,10 @@
     border: 2px solid rgba(40, 40, 80, 0.9);
     box-shadow: 0 0 0 1px rgba(255,255,255,0.6);
   }
-
   @keyframes eclipse-orb-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-
-  /* ====== CHAT WINDOW WRAPPER ====== */
   #eclipse-ai-chat-wrapper {
     position: fixed;
     bottom: 100px;
@@ -110,14 +99,11 @@
       transform 0.25s ease;
     z-index: 999998;
   }
-
   #eclipse-ai-chat-wrapper.eclipse-open {
     opacity: 1;
     transform: translateY(0) scale(1);
     pointer-events: auto;
   }
-
-  /* ====== HEADER ====== */
   #eclipse-ai-header {
     padding: 14px 16px 10px;
     display: flex;
@@ -126,7 +112,6 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     background: linear-gradient(to right, rgba(40, 50, 100, 0.9), rgba(15, 18, 40, 0.95));
   }
-
   #eclipse-ai-header-orb {
     width: 26px;
     height: 26px;
@@ -134,18 +119,15 @@
     background: radial-gradient(circle at 30% 20%, #ffffff 0, #c7d4ff 25%, #8fa0ff 55%, #5a4bff 90%);
     box-shadow: 0 0 12px rgba(120, 105, 255, 0.8);
   }
-
   #eclipse-ai-header-title {
     font-size: 14px;
     font-weight: 600;
     color: #f5f6ff;
   }
-
   #eclipse-ai-header-subtitle {
     font-size: 11px;
     color: rgba(210, 214, 255, 0.8);
   }
-
   #eclipse-ai-header-status {
     margin-left: auto;
     font-size: 11px;
@@ -154,7 +136,6 @@
     align-items: center;
     gap: 4px;
   }
-
   #eclipse-ai-header-status-dot {
     width: 7px;
     height: 7px;
@@ -162,8 +143,6 @@
     background: #4ade80;
     box-shadow: 0 0 8px rgba(74, 222, 128, 0.9);
   }
-
-  /* ====== MESSAGES AREA ====== */
   #eclipse-ai-messages {
     flex: 1;
     padding: 12px 12px 10px;
@@ -173,7 +152,6 @@
     gap: 8px;
     scroll-behavior: smooth;
   }
-
   .eclipse-msg {
     max-width: 85%;
     padding: 8px 11px;
@@ -183,14 +161,12 @@
     word-wrap: break-word;
     white-space: pre-wrap;
   }
-
   .eclipse-msg-user {
     margin-left: auto;
     background: linear-gradient(135deg, #4f46e5, #6366f1);
     color: #f9f9ff;
     border-bottom-right-radius: 4px;
   }
-
   .eclipse-msg-ai {
     margin-right: auto;
     background: rgba(18, 24, 48, 0.95);
@@ -198,7 +174,6 @@
     border-bottom-left-radius: 4px;
     border: 1px solid rgba(120, 130, 200, 0.35);
   }
-
   .eclipse-msg-system {
     margin: 4px auto;
     max-width: 90%;
@@ -206,8 +181,6 @@
     color: rgba(200, 205, 255, 0.7);
     text-align: center;
   }
-
-  /* ====== INPUT AREA ====== */
   #eclipse-ai-input-row {
     padding: 10px 10px 12px;
     border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -216,7 +189,6 @@
     align-items: center;
     gap: 8px;
   }
-
   #eclipse-ai-input {
     flex: 1;
     padding: 8px 10px;
@@ -227,11 +199,9 @@
     font-size: 13px;
     outline: none;
   }
-
   #eclipse-ai-input::placeholder {
     color: rgba(148, 163, 255, 0.7);
   }
-
   #eclipse-ai-send-btn {
     width: 32px;
     height: 32px;
@@ -246,18 +216,15 @@
     box-shadow: 0 0 12px rgba(99, 102, 241, 0.7);
     transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
   }
-
   #eclipse-ai-send-btn:hover {
     transform: translateY(-1px);
     box-shadow: 0 0 16px rgba(129, 140, 248, 0.9);
   }
-
   #eclipse-ai-send-btn:disabled {
     opacity: 0.5;
     cursor: default;
     box-shadow: none;
   }
-
   #eclipse-ai-send-icon {
     border: solid 2px white;
     border-width: 0 0 2px 2px;
@@ -265,33 +232,6 @@
     height: 9px;
     transform: rotate(225deg) translateY(-1px);
   }
-
-  /* ====== LOADING DOTS ====== */
-  #eclipse-ai-loading {
-    display: none;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 0 2px;
-    margin-left: 4px;
-  }
-
-  .eclipse-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: rgba(180, 190, 255, 0.9);
-    animation: eclipse-dot-bounce 1s infinite ease-in-out;
-  }
-
-  .eclipse-dot:nth-child(2) { animation-delay: 0.15s; }
-  .eclipse-dot:nth-child(3) { animation-delay: 0.3s; }
-
-  @keyframes eclipse-dot-bounce {
-    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
-    40% { transform: translateY(-3px); opacity: 1; }
-  }
-
-  /* ====== SMALL SCREEN ====== */
   @media (max-width: 480px) {
     #eclipse-ai-chat-wrapper {
       right: 12px;
@@ -303,7 +243,6 @@
   }
 </style>
 </head>
-
 <body>
 
 <div id="eclipse-ai-orb">
@@ -317,30 +256,27 @@
     <div id="eclipse-ai-header-orb"></div>
     <div>
       <div id="eclipse-ai-header-title">Eclipse AI</div>
-      <div id="eclipse-ai-header-subtitle">Gemini‑style assistant, running locally</div>
+      <div id="eclipse-ai-header-subtitle">Gemini 1.5 Flash assistant</div>
     </div>
     <div id="eclipse-ai-header-status">
       <div id="eclipse-ai-header-status-dot"></div>
-      <span id="eclipse-ai-status-label">Loading model…</span>
+      <span id="eclipse-ai-status-label">Ready</span>
     </div>
   </div>
 
   <div id="eclipse-ai-messages">
     <div class="eclipse-msg-system">
-      Eclipse AI is powered by a local model in your browser. First load may take a bit — then it’s all you and me, Player.
+      Eclipse AI is powered by Gemini 1.5 Flash through a secure server route. No local model, so it works on school Chromebooks.
     </div>
   </div>
 
   <div id="eclipse-ai-input-row">
-    <input id="eclipse-ai-input" type="text" placeholder="Ask Eclipse anything…" disabled />
-    <button id="eclipse-ai-send-btn" disabled>
+    <input id="eclipse-ai-input" type="text" placeholder="Ask Eclipse anything…" />
+    <button id="eclipse-ai-send-btn">
       <div id="eclipse-ai-send-icon"></div>
     </button>
   </div>
 </div>
-
-<!-- ====== WEBLLM SCRIPT ====== -->
-<script src="https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@latest/dist/web-llm.min.js"></script>
 
 <script>
 (function () {
@@ -351,17 +287,7 @@
   const sendBtn = document.getElementById("eclipse-ai-send-btn");
   const statusLabel = document.getElementById("eclipse-ai-status-label");
 
-  let engine = null;
-  let isReady = false;
   let isSending = false;
-
-  let conversation = [
-    {
-      role: "system",
-      content:
-        "You are Eclipse AI, a calm, balanced, supportive assistant. You call the user 'Player' sometimes, keep answers clear and helpful, and avoid anything unsafe or inappropriate. You run locally in the browser, so you never mention servers, APIs, or keys."
-    }
-  ];
 
   function appendMessage(role, text) {
     const div = document.createElement("div");
@@ -377,64 +303,19 @@
     messagesEl.scrollTop = messagesEl.scrollHeight;
   }
 
-  function setUIReady() {
-    isReady = true;
-    inputEl.disabled = false;
-    sendBtn.disabled = false;
-    statusLabel.textContent = "Ready";
-  }
-
-  function setUILoadingModel() {
-    isReady = false;
-    inputEl.disabled = true;
-    sendBtn.disabled = true;
-    statusLabel.textContent = "Loading model…";
-  }
-
   function setUISending(on) {
     isSending = on;
     inputEl.disabled = on;
     sendBtn.disabled = on;
-    if (on) {
-      statusLabel.textContent = "Thinking…";
-    } else if (isReady) {
-      statusLabel.textContent = "Ready";
-    }
+    statusLabel.textContent = on ? "Thinking…" : "Ready";
   }
 
   orb.addEventListener("click", () => {
     chatWrapper.classList.toggle("eclipse-open");
   });
 
-  async function initWebLLM() {
-    try {
-      setUILoadingModel();
-
-      const modelId = "Llama-3.2-1B-Instruct-q4f16_1-MLC";
-
-      engine = new webllm.MLCEngine();
-      await engine.reload(modelId, {
-        temperature: 0.7,
-        top_p: 0.9
-      });
-
-      setUIReady();
-      appendMessage(
-        "assistant",
-        "Hey Player — Eclipse is online. I’m running locally in your browser. What do you want to explore?"
-      );
-    } catch (err) {
-      console.error(err);
-      statusLabel.textContent = "Model failed";
-      appendMessage(
-        "system",
-        "Eclipse couldn’t load the local model. Try reloading the page or using a different device or network."
-      );
-    }
-  }
-
   async function sendMessage() {
-    if (!isReady || isSending) return;
+    if (isSending) return;
     const text = inputEl.value.trim();
     if (!text) return;
 
@@ -442,27 +323,19 @@
     inputEl.value = "";
     setUISending(true);
 
-    conversation.push({ role: "user", content: text });
-
     try {
-      const reply = await engine.chat.completions.create({
-        messages: conversation,
-        stream: false,
-        max_tokens: 256
+      const res = await fetch("/api/gemini", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
       });
 
-      const content =
-        reply?.choices?.[0]?.message?.content ||
-        "Player, something glitched in my thoughts there. Try again.";
-
-      conversation.push({ role: "assistant", content });
-      appendMessage("assistant", content);
+      const data = await res.json();
+      const reply = data?.reply || "Something glitched, Player. Try again.";
+      appendMessage("assistant", reply);
     } catch (err) {
       console.error(err);
-      appendMessage(
-        "assistant",
-        "Something interrupted my response, Player. Try again or refresh the page."
-      );
+      appendMessage("assistant", "I hit a server issue, Player. Try again in a bit.");
     } finally {
       setUISending(false);
     }
@@ -475,8 +348,6 @@
       sendMessage();
     }
   });
-
-  setTimeout(initWebLLM, 400);
 })();
 </script>
 
