@@ -1,7 +1,7 @@
 export default async function handler(req, res) {
   try {
-    const body = await req.json();
-    const message = body.message;
+    // Vercel serverless functions use req.body directly (already parsed)
+    const { message } = req.body;
 
     const apiKey = process.env.GEMINI_API_KEY;
 
