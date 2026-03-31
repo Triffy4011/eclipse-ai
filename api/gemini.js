@@ -32,7 +32,7 @@ export default async function handler(req, res) {
 
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "Suck it.";
+      "I couldn’t generate a response, Player.";
 
     res.status(200).json({ reply: text });
   } catch (err) {
