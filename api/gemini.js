@@ -5,14 +5,14 @@ export default async function handler(req, res) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: "Missing GEMINI_API_KEY" });
+    console.error("Missing GEMINI_API_KEY");
+    return res.status(500).json({ reply: "Server error, Player." });
   }
 
   try {
     const { message } = req.body || {};
-
-    if (!message) {
-      return res.status(400).json({ error: "Missing message" });
+    if (!message || typeof message !== "string") {
+      return res.status(400).json({ reply: "Missing message, Player." });
     }
 
     const geminiRes = await fetch(
@@ -33,15 +33,14 @@ export default async function handler(req, res) {
 
     const data = await geminiRes.json();
 
-    // If Gemini returned an error, show it
-    if (data.error) {
-      console.error("Gemini API error:", data.error);
+    if (!geminiRes.ok || data.error) {
+      console.error("Gemini API error:", data.error || data);
       return res.status(500).json({ reply: "Gemini API error, Player." });
     }
 
     const reply =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
-      "I couldn’t generate a response.";
+      "I couldn’t generate a response, Player.";
 
     return res.status(200).json({ reply });
   } catch (err) {
