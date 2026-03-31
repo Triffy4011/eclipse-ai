@@ -29,7 +29,6 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
-    // Try every possible place Gemini might put the text
     const text =
       data?.candidates?.[0]?.content?.parts?.[0]?.text ||
       data?.candidates?.[0]?.output ||
