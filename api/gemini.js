@@ -13,17 +13,14 @@ export default async function handler(req, res) {
     const apiKey = process.env.GEMINI_API_KEY;
 
     const response = await fetch(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey,
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateText?key=" + apiKey,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          contents: [
-            {
-              role: "user",
-              parts: [{ text: message }]
-            }
-          ]
+          prompt: {
+            text: message
+          }
         })
       }
     );
@@ -31,7 +28,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     const text =
-      data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+      data?.candidates?.[0]?.output ||
       "I couldn’t generate a response, Player.";
 
     res.status(200).json({ reply: text });
