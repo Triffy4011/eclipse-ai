@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
   try {
-    const { message } = JSON.parse(req.body);
+    const body = await req.json();
+    const message = body.message;
 
     const apiKey = process.env.GEMINI_API_KEY;
 
